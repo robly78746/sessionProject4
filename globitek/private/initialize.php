@@ -4,8 +4,7 @@
 // attempting page redirects. Or else uncomment the line below.
 ob_start();
 
-// Enable sessions
-// TODO add configurations
+// Enable sessions with configurations
 $dayInSeconds = 1 * 24 * 60 * 60;//1day * 24hrs/1day * 60min/1hr * 60sec/1min
 $sessionConfigOptions = ['use_only_cookies' => true, 'cookie_lifetime' => $dayInSeconds, 'cookie_httponly' => true]; 
 session_start($sessionConfigOptions);
