@@ -482,9 +482,12 @@
   // find_users_by_username('rockclimber67');
   function find_users_by_username($username='') {
     global $db;
-    $sql = "SELECT * FROM users ";
-    $sql .= "WHERE username = '" . h($username) . "';";
-    $users_result = db_query($db, $sql);
+    //$sql = "SELECT * FROM users ";
+    //$sql .= "WHERE username = '" . h($username) . "';";
+	$sql = $db->prepare("SELECT * FROM users WHERE username=?;");
+	$sql->bind_param("s", $username);
+	$sql->execute();
+    $users_result = mysqli_stmt_get_result($sql);
     return $users_result;
   }
 

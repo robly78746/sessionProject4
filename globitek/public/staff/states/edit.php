@@ -14,6 +14,10 @@ $errors = array();
 
 if(is_post_request()) {
 
+  if(!csrf_token_is_recent()) {
+	  exit('Error: invalid request');
+  }
+
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $state['name'] = $_POST['name']; }
   if(isset($_POST['code'])) { $state['code'] = $_POST['code']; }
@@ -49,5 +53,5 @@ if(is_post_request()) {
   </form>
 
 </div>
-
+<?php echo csrf_token_tag(); ?>
 <?php include(SHARED_PATH . '/footer.php'); ?>

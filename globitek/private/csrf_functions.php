@@ -5,11 +5,19 @@
     // Requires PHP 7 or later
     return bin2hex(random_bytes(64));
   }
+  
+  function create_csrf_token() {
+	$token = csrf_token();
+	$_SESSION['csrf_token'] = $token;
+	$_SESSION['csrf_token_time'] = time();
+	return $token;
+  }
 
   // Returns HTML for a hidden form input with a CSRF token as the value
   function csrf_token_tag() {
     // TODO needs to set a token and put in an HTML tag
-    return '<input type="TODO" name="TODO" value="TODO" />';
+	$token = create_csrf_token();
+    return '<input type="hidden" name="csrf_token" value="' . $token . '" />';
   }
 
   // Returns true if form token matches session token, false if not.
@@ -22,8 +30,9 @@
   // Determines if the form token should be considered "recent"
   // by comparing it to the time a token was last generated.
   function csrf_token_is_recent() {
-    // TODO add code to determine if csrf token is recent
-    return true;
+	$recent_limit = 60 * 60 * 24 * 1; //1 day
+	if(!isset($_SESSION['csrf_token_time'])) { return false; }
+    return (($_SESSION['csrf_token_time'] + $recent_limit) >= time()) ;
   }
 
 ?>

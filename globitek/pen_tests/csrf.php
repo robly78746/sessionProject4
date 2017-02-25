@@ -17,6 +17,7 @@ function delete_fake_login() {
 }
 
 $tested = isset($_GET['tested']) ? true : false;
+$msg = '';
 
 if($tested) {
   $state_result = find_state_by_id(1);
